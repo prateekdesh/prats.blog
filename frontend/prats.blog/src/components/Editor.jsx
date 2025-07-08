@@ -60,8 +60,6 @@ const extensions = [
   Italic,
 ];
 
-const DEFAULT = '';
-
 const Editor = ({ content, setContent }) => {
 
   const onChangeContent = (newContent) => {

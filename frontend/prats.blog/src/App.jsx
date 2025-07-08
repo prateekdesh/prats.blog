@@ -32,7 +32,7 @@ function App() {
           {posts.map((post) => (
             <li key={post.id} className="list-none">
               <div className="p-5 my-5 rounded-2xl">
-                <Link to={`/${post.slug}`} className="no-underline">
+                <Link to={`/posts/${post.slug}`} className="no-underline">
                   <h1 className="text-2xl font-semibold text-black hover:text-gray-500">{post.title}</h1>
                 </Link>
                 <h5 className="text-sm text-gray-700 mb-3">{post.date_published}</h5>
