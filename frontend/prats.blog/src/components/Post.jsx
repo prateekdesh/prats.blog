@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom"
 import { useState, useEffect } from "react";
 import api from "../api";
+import "./Post.css";
 
 function Post() {
     const {slug} = useParams();
-    const [post, setPost] = useState([]);
+    const [post, setPost] = useState({});
 
     useEffect(() => {
       const fetchPost = async () => {
@@ -19,6 +20,8 @@ function Post() {
       fetchPost();
     }, []);
 
+    console.log("post.content", post.content, typeof post.content);
+
     return (
         <div className="w-full min-h-screen">
             <nav className="bg-[#2C2C2C]">
@@ -32,7 +35,10 @@ function Post() {
                 </div>
             </div>
             <div className="flex justify-center mt-10 w-full">
-                <p className="max-w-3xl w-full text-lg text-black">{post.content}</p>
+                <div 
+                    className="post-content"
+                    dangerouslySetInnerHTML={{ __html: post.content || '' }}
+                />
             </div>
         </div>
     )

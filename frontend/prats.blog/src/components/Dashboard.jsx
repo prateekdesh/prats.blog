@@ -43,7 +43,7 @@ function Dashboard() {
             <li className="mb-10 ml-3 mt-3">
               <h1 className="font-[Metamorphous] text-2xl">prats.blog</h1>
             </li>
-            <Link to="/dashboard/newPost">
+            <Link to="/dashboard/new">
                 <li className="mb-5">
                     <button className="w-48 rounded-full text-xl bg-[#3C7A89] hover:bg-[#478B9B] p-4">New Post</button>
                 </li>
@@ -79,11 +79,12 @@ function Dashboard() {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" className="text-white max-h-10 m-5 mb-0 mt-0" viewBox="0 0 32 32"><g data-name="32-Book"><path d="M29.71 8.29A5.86 5.86 0 0 1 28 5a5.87 5.87 0 0 1 1.71-3.29A1 1 0 0 0 29 0H7a5 5 0 0 0-5 5v22a5 5 0 0 0 5 5h22a1 1 0 0 0 1-1V9a1 1 0 0 0-.29-.71zM7 2h20a6.84 6.84 0 0 0-.84 2H11v4H7a3 3 0 0 1 0-6zm20 6h-8V6h7.13A6.81 6.81 0 0 0 27 8zm1 22H7a3 3 0 0 1-3-3V9a5 5 0 0 0 3 1h4v7a1 1 0 0 0 1.55.83L15 16.2l2.45 1.63A1 1 0 0 0 19 17v-7h9z"/><path d="M7 4h2v2H7zM25 18v-4a1 1 0 0 0-1-1h-3v2h2v2h-2v2h3a1 1 0 0 0 1-1zM7 22h2v2H7zM11 22h2v2h-2zM17 22h8v2h-8z"/></g></svg>
                         <div className="flex flex-col min-w-0">
                           <p className="text-white text-base truncate">{post.title}</p>
+                          <p className="text-gray-400 text-sm truncate">{post.preview}</p>
                           <p className="text-gray-300 text-xs">{post.date_published}</p>
                         </div>
                       </Link>
                       <button
-                        onClick={() => navigate("/")}
+                        onClick={() => navigate("/dashboard/edit", {state: {post} })}
                         className="ml-auto mr-10 bg-transparent hover:bg-gray-600 rounded-full p-0 flex items-center justify-center min-w-[40px] min-h-[40px]"
                         title="Edit"
                         style={{ minWidth: '40px', minHeight: '40px' }}

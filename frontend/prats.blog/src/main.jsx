@@ -6,6 +6,7 @@ import Post from './components/Post.jsx'
 import Login from './components/Login.jsx'
 import Dashboard from './components/Dashboard.jsx'
 import NewPost from './components/NewPost.jsx'
+import EditPost from './components/EditPost.jsx'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 const router = createBrowserRouter([
@@ -13,7 +14,8 @@ const router = createBrowserRouter([
   {path: "/posts/:slug", element: <Post />},
   {path: "/dashboard", element: <Dashboard />},
   {path: "/login", element: <Login />},
-  {path: "/dashboard/newPost", element: <NewPost />},
+  {path: "/dashboard/new", element: <NewPost />},
+  {path: "/dashboard/edit", element: <EditPost />}
 
 ]);
 

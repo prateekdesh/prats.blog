@@ -14,7 +14,7 @@ app = FastAPI()
 
 
 origins = [
-    "http://localhost:5173",
+    "*",
 ]
 
 app.add_middleware(
@@ -56,13 +56,15 @@ def posts(session: Session = Depends(db.get_session)):
             # Format date_published and last_modified as dd:mm:yyyy hh:mm:ss
             date_published = post.date_published.strftime("%d %B, %Y") if post.date_published else None
             last_modified = post.last_modified.strftime("%d %B, %Y") if post.last_modified else None
-            data = {"id": post.id,
-            "title": post.title,
-            "slug": post.slug,
-            "content": post.content,
-            "date_published": date_published,
-            "last_modified": last_modified,
-            "is_public": post.is_public
+            data = {
+                "id": post.id,
+                "title": post.title,
+                "slug": post.slug,
+                "content": post.content,
+                "preview": post.preview,
+                "date_published": date_published,
+                "last_modified": last_modified,
+                "is_public": post.is_public
             }
             posts_array.append(data)
         return posts_array
@@ -81,6 +83,7 @@ def new_post(post: PostReq, session: Session = Depends(db.get_session), authoriz
             title=post.title,
             slug=slugify(post.title),
             content=post.content,
+            preview=post.preview,
             date_published=now,
             last_modified=now,
             is_public=post.is_public
@@ -111,6 +114,7 @@ def update_post(id: int, update: PostReq, session: Session = Depends(db.get_sess
 
     post.title = update.title
     post.content = update.content
+    post.preview = update.preview
     post.slug = slugify(update.title)
     post.last_modified = datetime.now()
     post.is_public = update.is_public

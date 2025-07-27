@@ -3,13 +3,16 @@ import Editor from "./Editor";
 import { useState } from "react";
 import 'reactjs-tiptap-editor/style.css';
 import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 
 
-function NewPost() {
-    const [content, setContent] = useState("");
-    const [title, setTitle] = useState("");
-    const [preview, setPreview] = useState("");
-    const [isPublic, setIsPublic] = useState(false);
+function EditPost() {
+    const location = useLocation();
+    const post = location.state?.post;
+    const [content, setContent] = useState(post.content);
+    const [title, setTitle] = useState(post.title);
+    const [preview, setPreview] = useState(post.preview || "");
+    const [isPublic, setIsPublic] = useState(post.is_public);
     const navigate = useNavigate();
 
     const handleTitle = (event) => {
@@ -24,8 +27,11 @@ function NewPost() {
         setIsPublic(event.target.checked)
     }
 
-    const postPost = async () => {
-        const post = {
+    const editPost = async () => {
+        if (!window.confirm("Are you sure you want to save changes to this post?")) {
+            return;
+        }
+        const edited = {
             title: title, 
             content: content,
             preview: preview,
@@ -33,7 +39,7 @@ function NewPost() {
         }
 
         try {
-            const response = await api.post("/posts", post);
+            const response = await api.put(`/posts/${post.id}`, edited);
             console.log(response.data)
             navigate("/dashboard");
         }
@@ -42,9 +48,23 @@ function NewPost() {
         }
     }
 
+    const deletePost = async () => {
+        if (!window.confirm("Are you sure you want to delete this post? This action cannot be undone.")) {
+            return;
+        }
+        try {
+            const response = await api.delete(`/posts/${post.id}`);
+            console.log(response.data)
+            navigate("/dashboard")
+        }
+        catch(err) {
+            console.log("An error occured: ", err)
+        }
+    }
+
     return (
         <div className="flex items-center h-screen w-full flex-col">
-            <h1 className="mt-10 text-4xl font-bold">Get cookin'.</h1>
+            <h1 className="mt-10 text-4xl font-bold">Did you overcook?</h1>
             <label>Title: 
                 <input type="text" className="border rounded ml-3 mt-10 w-3xl overflow-x-auto bg-white" 
                 value={title}
@@ -67,12 +87,12 @@ function NewPost() {
               public
             </label>
             <div className="flex flex-row pb-10">
-                <button onClick={postPost} className="bg-[#222] rounded-full p-3 text-white hover:bg-[#444] mr-10 w-30">Publish</button>
-                <button className="bg-[#222] rounded-full p-3 text-white hover:bg-[#444] w-30">Draft</button>
+                <button onClick={editPost} className="bg-[#222] rounded-full p-3 text-white hover:bg-[#444] mr-10 w-30">Save</button>
+                <button onClick={deletePost} className="bg-red-600 rounded-full p-3 text-white hover:bg-red-500 w-30">Delete</button>
             </div>            
 
         </div>
     )
 }
 
-export default NewPost;
+export default EditPost;

@@ -21,6 +21,7 @@ class User(SQLModel, table=True):
 class PostReq(BaseModel):
     title: str
     content: str
+    preview: str
     is_public: bool
 
 class Post(SQLModel, table=True):
@@ -28,6 +29,7 @@ class Post(SQLModel, table=True):
     title: str
     slug: str = Field(unique=True)
     content: str
+    preview: str = Field(default="")
     date_published: datetime
     last_modified: datetime
     is_public: bool

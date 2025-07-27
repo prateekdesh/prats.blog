@@ -29,14 +29,14 @@ function App() {
         {/* <h1 className="text-center text-4xl font-bold text-black my-8">prats.blog</h1> */}
  
         <ul>
-          {posts.map((post) => (
+          {posts.filter(post => post.is_public).map((post) => (
             <li key={post.id} className="list-none">
               <div className="p-5 my-5 rounded-2xl">
                 <Link to={`/posts/${post.slug}`} className="no-underline">
                   <h1 className="text-2xl font-semibold text-black hover:text-gray-500">{post.title}</h1>
                 </Link>
                 <h5 className="text-sm text-gray-700 mb-3">{post.date_published}</h5>
-                <h3 className="text-lg text-black mb-5 max-w-[55vw]">{post.content}</h3>
+                <h3 className="text-lg text-black mb-5 max-w-[55vw]">{post.preview}</h3>
                 <hr className='border-t-2 border-gray-300 w-[55vw]'/>
               </div>
             </li>
