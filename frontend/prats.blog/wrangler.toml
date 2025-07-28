@@ -1,0 +1,7 @@
+name = "pratsblog"
+main = "src/index.js"           # or "src/index.js" if using JavaScript
+
+[assets]
+directory = "./dist"   # path to your Vite build output
+binding = "ASSETS"
+not_found_handling = "single-page-application"
