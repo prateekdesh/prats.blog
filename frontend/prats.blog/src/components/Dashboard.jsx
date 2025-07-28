@@ -66,7 +66,7 @@ function Dashboard() {
         </nav>
       </aside>
       <div className="flex-1 p-10">
-          <h2 className="text-5xl font-bold mb-15 ml-10 mt-5">Hello, Prateek.</h2>
+          <h2 className="text-5xl font-bold mb-15 ml-10 mt-5">Hello.</h2>
           <div className="flex-col bg-[#252525] w-200 rounded-xl pb-10 max-h-[70vh] overflow-y-auto">
               <p className="text-white font-bold p-10 pb-5 text-3xl">Posts</p>
 
