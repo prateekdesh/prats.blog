@@ -10,7 +10,7 @@ const date = post.publishedAt
 <article>
   <a href={`/writing/${post.slug.current}`} class="group block">
     {post.coverImage?.asset && (
-      <div class="mb-4 overflow-hidden rounded-lg aspect-[16/9] bg-stone-100">
+      <div class="mb-4 overflow-hidden rounded-lg aspect-[16/9] bg-stone-100 dark:bg-stone-900">
         <img
           src={urlFor(post.coverImage).width(800).height(450).url()}
           alt={post.coverImage.alt || post.title}
@@ -24,21 +24,23 @@ const date = post.publishedAt
       {post.tags?.length > 0 && (
         <div class="flex flex-wrap gap-1.5">
           {post.tags.map((tag: any) => (
-            <span class="text-xs text-stone-500 tracking-wide uppercase">{tag.title}</span>
+            <span class="text-xs text-stone-500 dark:text-stone-500 tracking-wide uppercase">{tag.title}</span>
           ))}
         </div>
       )}
 
-      <h2 class="text-xl font-semibold tracking-tight group-hover:opacity-70 transition-opacity leading-snug">
+      <h2 class="text-xl font-semibold tracking-tight leading-snug inline-block relative
+        after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-0 after:bg-stone-900 dark:after:bg-stone-100
+        after:transition-all after:duration-300 group-hover:after:w-full">
         {post.title}
       </h2>
 
       {post.excerpt && (
-        <p class="text-stone-500 text-sm leading-relaxed line-clamp-2">{post.excerpt}</p>
+        <p class="text-stone-500 dark:text-stone-400 text-sm leading-relaxed line-clamp-2">{post.excerpt}</p>
       )}
 
       {date && (
-        <time class="text-xs text-stone-400" datetime={post.publishedAt}>{date}</time>
+        <time class="text-xs text-stone-400 dark:text-stone-600" datetime={post.publishedAt}>{date}</time>
       )}
     </div>
   </a>

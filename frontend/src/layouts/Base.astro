@@ -1,5 +1,7 @@
 ---
 import '../styles/global.css'
+import Search from '../components/Search'
+import ThemeToggle from '../components/ThemeToggle'
 
 interface Props {
   title?: string
@@ -29,16 +31,27 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
     <meta property="og:type" content="website" />
     {ogImage && <meta property="og:image" content={ogImage} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <!-- Prevent flash of wrong theme: default dark -->
+    <script is:inline>
+      const stored = localStorage.getItem('theme')
+      if (stored === 'light') {
+        document.documentElement.classList.remove('dark')
+      } else {
+        document.documentElement.classList.add('dark')
+      }
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
-    <header class="border-b border-stone-200">
+    <header class="border-b border-stone-200 dark:border-stone-800">
       <div class="max-w-2xl mx-auto px-6 py-5 flex items-center justify-between">
         <a href="/" class="text-base font-semibold tracking-tight hover:opacity-70 transition-opacity">
-          prats.blog
+          Prateek Deshmukh
         </a>
-        <nav class="flex items-center gap-6 text-sm text-stone-500">
-          <a href="/writing" class="hover:text-stone-900 transition-colors">Writing</a>
-          <a href="/about" class="hover:text-stone-900 transition-colors">About</a>
+        <nav class="flex items-center gap-6 text-sm text-stone-500 dark:text-stone-400">
+          <a href="/writing" class="hover:text-stone-900 dark:hover:text-stone-100 transition-colors">Writing</a>
+          <a href="/about" class="hover:text-stone-900 dark:hover:text-stone-100 transition-colors">About</a>
+          <Search client:load />
+          <ThemeToggle client:load />
         </nav>
       </div>
     </header>
@@ -47,10 +60,10 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site)
       <slot />
     </main>
 
-    <footer class="border-t border-stone-200 mt-20">
-      <div class="max-w-2xl mx-auto px-6 py-8 flex items-center justify-between text-sm text-stone-400">
+    <footer class="border-t border-stone-200 dark:border-stone-800 mt-20">
+      <div class="max-w-2xl mx-auto px-6 py-8 flex items-center justify-between text-sm text-stone-400 dark:text-stone-500">
         <span>© {new Date().getFullYear()} Prateek Deshmukh</span>
-        <a href="https://twitter.com/prateekdeshmukh" class="hover:text-stone-900 transition-colors">Twitter</a>
+        <a href="https://twitter.com/prateekdesh19" class="hover:text-stone-900 dark:hover:text-stone-100 transition-colors">Twitter</a>
       </div>
     </footer>
   </body>

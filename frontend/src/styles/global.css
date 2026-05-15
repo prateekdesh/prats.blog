@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+/* Class-based dark mode for Tailwind v4 */
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
   html {
@@ -6,11 +10,22 @@
     color: #1c1917;
     -webkit-font-smoothing: antialiased;
     font-family: "Inter", system-ui, sans-serif;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  html.dark {
+    background-color: #0c0a09;
+    color: #e7e5e4;
   }
 
   ::selection {
     background-color: #1c1917;
     color: #fafaf9;
+  }
+
+  .dark ::selection {
+    background-color: #e7e5e4;
+    color: #0c0a09;
   }
 
   * {

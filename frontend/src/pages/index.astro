@@ -12,8 +12,8 @@ const rest = posts.slice(1)
   <div class="max-w-2xl mx-auto px-6 py-16">
     <div class="mb-16">
       <h1 class="text-3xl font-semibold tracking-tight mb-3">prats.blog</h1>
-      <p class="text-stone-500 text-lg leading-relaxed">
-        Writing on tech, building things, and ideas worth sharing.
+      <p class="text-stone-500 dark:text-stone-400 text-lg leading-relaxed">
+        Writing on tech and startups.
       </p>
     </div>
 
@@ -22,7 +22,7 @@ const rest = posts.slice(1)
     ) : (
       <div class="space-y-16">
         {featured && (
-          <div class="pb-16 border-b border-stone-200">
+          <div class="pb-16 border-b border-stone-200 dark:border-stone-800">
             <PostCard post={featured} />
           </div>
         )}

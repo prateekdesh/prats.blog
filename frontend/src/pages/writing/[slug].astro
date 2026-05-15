@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro'
 import { client, queries, urlFor } from '../../lib/sanity'
-import { PortableText } from '@portabletext/react'
+import { toHTML } from '@portabletext/to-html'
 
 export async function getStaticPaths() {
   const posts = await client.fetch(queries.allPosts)
@@ -28,7 +28,7 @@ const ogImage = post.coverImage?.asset ? urlFor(post.coverImage).width(1200).hei
           {post.tags.map((tag: any) => (
             <a
               href={`/writing/tag/${tag.slug.current}`}
-              class="text-xs text-stone-500 tracking-wide uppercase hover:text-stone-900 transition-colors"
+              class="text-xs text-stone-500 dark:text-stone-500 tracking-wide uppercase hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
             >
               {tag.title}
             </a>
@@ -38,7 +38,7 @@ const ogImage = post.coverImage?.asset ? urlFor(post.coverImage).width(1200).hei
 
       <h1 class="text-3xl font-semibold tracking-tight leading-tight mb-4">{post.title}</h1>
 
-      <div class="flex items-center gap-3 text-sm text-stone-400">
+      <div class="flex items-center gap-3 text-sm text-stone-400 dark:text-stone-600">
         {post.author?.name && (
           <span>{post.author.name}</span>
         )}
@@ -52,7 +52,7 @@ const ogImage = post.coverImage?.asset ? urlFor(post.coverImage).width(1200).hei
     </div>
 
     {post.coverImage?.asset && (
-      <div class="mb-12 rounded-lg overflow-hidden aspect-[16/9] bg-stone-100">
+      <div class="mb-12 rounded-lg overflow-hidden aspect-[16/9] bg-stone-100 dark:bg-stone-900">
         <img
           src={urlFor(post.coverImage).width(1200).height(675).url()}
           alt={post.coverImage.alt || post.title}
@@ -61,19 +61,23 @@ const ogImage = post.coverImage?.asset ? urlFor(post.coverImage).width(1200).hei
       </div>
     )}
 
-    <div class="prose prose-stone prose-lg max-w-none
+    <div class="prose prose-stone prose-lg max-w-none dark:prose-invert
       prose-headings:font-semibold prose-headings:tracking-tight
       prose-a:text-stone-900 prose-a:underline prose-a:decoration-stone-300 prose-a:underline-offset-2
       hover:prose-a:decoration-stone-900
+      dark:prose-a:text-stone-100 dark:prose-a:decoration-stone-700 dark:hover:prose-a:decoration-stone-400
       prose-code:text-sm prose-code:bg-stone-100 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
+      dark:prose-code:bg-stone-800 dark:prose-code:text-stone-200
       prose-pre:bg-stone-900 prose-pre:text-stone-100
+      dark:prose-pre:bg-stone-950
       prose-blockquote:border-stone-300 prose-blockquote:text-stone-600 prose-blockquote:not-italic
+      dark:prose-blockquote:border-stone-700 dark:prose-blockquote:text-stone-400
       prose-img:rounded-lg">
-      {post.body && <PortableText value={post.body} client:load />}
+      {post.body && <Fragment set:html={toHTML(post.body)} />}
     </div>
 
-    <div class="mt-16 pt-8 border-t border-stone-200">
-      <a href="/writing" class="text-sm text-stone-400 hover:text-stone-900 transition-colors">
+    <div class="mt-16 pt-8 border-t border-stone-200 dark:border-stone-800">
+      <a href="/writing" class="text-sm text-stone-400 dark:text-stone-600 hover:text-stone-900 dark:hover:text-stone-100 transition-colors">
         ← All posts
       </a>
     </div>
