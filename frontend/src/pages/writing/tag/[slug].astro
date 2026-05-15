@@ -1,0 +1,36 @@
+---
+import Base from '../../../layouts/Base.astro'
+import PostCard from '../../../components/PostCard.astro'
+import { client, queries } from '../../../lib/sanity'
+
+export async function getStaticPaths() {
+  const tags = await client.fetch(queries.allTags)
+  return tags.map((tag: any) => ({ params: { slug: tag.slug.current }, props: { tag } }))
+}
+
+const { slug } = Astro.params
+const { tag } = Astro.props
+const posts = await client.fetch(queries.postsByTag, { slug })
+---
+
+<Base title={tag.title}>
+  <div class="max-w-2xl mx-auto px-6 py-16">
+    <div class="mb-12">
+      <a href="/writing" class="text-sm text-stone-400 hover:text-stone-900 transition-colors mb-4 inline-block">
+        ← All posts
+      </a>
+      <h1 class="text-2xl font-semibold tracking-tight">{tag.title}</h1>
+      <p class="text-stone-500 text-sm mt-1">{posts.length} {posts.length === 1 ? 'post' : 'posts'}</p>
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="text-stone-400 text-sm">No posts with this tag yet.</p>
+    ) : (
+      <div class="space-y-12">
+        {posts.map((post: any) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    )}
+  </div>
+</Base>

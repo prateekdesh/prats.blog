@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro'
+import PostCard from '../components/PostCard.astro'
+import { client, queries } from '../lib/sanity'
+
+const posts = await client.fetch(queries.allPosts)
+const featured = posts[0]
+const rest = posts.slice(1)
+---
+
+<Base>
+  <div class="max-w-2xl mx-auto px-6 py-16">
+    <div class="mb-16">
+      <h1 class="text-3xl font-semibold tracking-tight mb-3">prats.blog</h1>
+      <p class="text-stone-500 text-lg leading-relaxed">
+        Writing on tech, building things, and ideas worth sharing.
+      </p>
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="text-stone-400 text-sm">No posts yet. Check back soon.</p>
+    ) : (
+      <div class="space-y-16">
+        {featured && (
+          <div class="pb-16 border-b border-stone-200">
+            <PostCard post={featured} />
+          </div>
+        )}
+        <div class="space-y-12">
+          {rest.map((post: any) => (
+            <PostCard post={post} />
+          ))}
+        </div>
+      </div>
+    )}
+  </div>
+</Base>

@@ -1,0 +1,45 @@
+---
+import { urlFor } from '../lib/sanity'
+
+const { post } = Astro.props
+const date = post.publishedAt
+  ? new Date(post.publishedAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })
+  : null
+---
+
+<article>
+  <a href={`/writing/${post.slug.current}`} class="group block">
+    {post.coverImage?.asset && (
+      <div class="mb-4 overflow-hidden rounded-lg aspect-[16/9] bg-stone-100">
+        <img
+          src={urlFor(post.coverImage).width(800).height(450).url()}
+          alt={post.coverImage.alt || post.title}
+          class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500"
+          loading="lazy"
+        />
+      </div>
+    )}
+
+    <div class="space-y-2">
+      {post.tags?.length > 0 && (
+        <div class="flex flex-wrap gap-1.5">
+          {post.tags.map((tag: any) => (
+            <span class="text-xs text-stone-500 tracking-wide uppercase">{tag.title}</span>
+          ))}
+        </div>
+      )}
+
+      <h2 class="text-xl font-semibold tracking-tight group-hover:opacity-70 transition-opacity leading-snug">
+        {post.title}
+      </h2>
+
+      {post.excerpt && (
+        <p class="text-stone-500 text-sm leading-relaxed line-clamp-2">{post.excerpt}</p>
+      )}
+
+      {date && (
+        <time class="text-xs text-stone-400" datetime={post.publishedAt}>{date}</time>
+      )}
+    </div>
+  </a>
+</article>

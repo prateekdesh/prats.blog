@@ -1,0 +1,42 @@
+---
+import Base from '../../layouts/Base.astro'
+import PostCard from '../../components/PostCard.astro'
+import { client, queries } from '../../lib/sanity'
+
+const [posts, tags] = await Promise.all([
+  client.fetch(queries.allPosts),
+  client.fetch(queries.allTags),
+])
+---
+
+<Base title="Writing">
+  <div class="max-w-2xl mx-auto px-6 py-16">
+    <div class="mb-12">
+      <h1 class="text-2xl font-semibold tracking-tight mb-2">Writing</h1>
+      <p class="text-stone-500 text-sm">All posts, newest first.</p>
+    </div>
+
+    {tags.length > 0 && (
+      <div class="flex flex-wrap gap-2 mb-12">
+        {tags.map((tag: any) => (
+          <a
+            href={`/writing/tag/${tag.slug.current}`}
+            class="text-xs px-3 py-1.5 rounded-full border border-stone-200 text-stone-500 hover:border-stone-400 hover:text-stone-900 transition-colors"
+          >
+            {tag.title}
+          </a>
+        ))}
+      </div>
+    )}
+
+    {posts.length === 0 ? (
+      <p class="text-stone-400 text-sm">No posts yet.</p>
+    ) : (
+      <div class="space-y-12">
+        {posts.map((post: any) => (
+          <PostCard post={post} />
+        ))}
+      </div>
+    )}
+  </div>
+</Base>

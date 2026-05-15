@@ -1,8 +1,0 @@
-name = "pratsblog"
-main = "src/index.js"           # or "src/index.js" if using JavaScript
-compatibility_date = "2025-07-28"
-
-[assets]
-directory = "./frontend/dist"   # path to your Vite build output
-binding = "ASSETS"
-not_found_handling = "single-page-application"
